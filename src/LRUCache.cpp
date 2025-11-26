@@ -29,7 +29,6 @@ bool LRUCache::put(PointerWrapper<AudioTrack> track) {
                 is_evicted = evictLRU();
             }
             index = findEmptySlot();
-            slots[index].clear();
             slots[index].store(std::move(track), ++access_counter);
         }
     }

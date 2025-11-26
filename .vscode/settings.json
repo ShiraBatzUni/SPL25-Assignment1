@@ -57,7 +57,8 @@
         "typeinfo": "cpp",
         "variant": "cpp",
         "format": "cpp"
-    }
+    },
+    "C_Cpp.dimInactiveRegions": false
 } // {
 //     // Disable GitHub Copilot
 //     "github.copilot.enable": {
