@@ -11,7 +11,16 @@ DJControllerService::DJControllerService(size_t cache_size)
  */
 int DJControllerService::loadTrackToCache(AudioTrack& track) {
     // Your implementation here 
-    return 0; // Placeholder
+    int found = 0;
+    if (cache.contains(track.get_title())) {
+        cache.get(track.get_title());
+        found = 1;
+    }
+    else {
+        bool did_evict = cache.put(track.clone());
+        if (did_evict) found = -1;
+    }
+    return found; // Placeholder
 }
 
 void DJControllerService::set_cache_size(size_t new_size) {
