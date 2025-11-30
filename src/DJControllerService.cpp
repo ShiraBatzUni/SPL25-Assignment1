@@ -11,16 +11,23 @@ DJControllerService::DJControllerService(size_t cache_size)
  */
 int DJControllerService::loadTrackToCache(AudioTrack& track) {
     // Your implementation here 
-    int found = 0;
-    if (cache.contains(track.get_title())) {
-        cache.get(track.get_title());
-        found = 1;
+    const std::string& title = track.get_title();
+    if (cache.contains(title)) {
+        cache.get(title);
+        return 1;  
     }
-    else {
-        bool did_evict = cache.put(track.clone());
-        if (did_evict) found = -1;
+      PointerWrapper<AudioTrack> clone = track.clone();
+    if (!clone) {
+        std::cerr << "[Error] clone() returned nullptr\n";
+        return -1;
     }
-    return found; // Placeholder
+    clone.get()->load();
+    clone.get()->analyze_beatgrid();
+    bool evicted = cache.put(std::move(clone));
+    if (evicted) {
+        return -1;   
+    }
+    return 0;       
 }
 
 void DJControllerService::set_cache_size(size_t new_size) {
