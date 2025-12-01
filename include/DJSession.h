@@ -50,6 +50,17 @@ private:
         size_t deck_loads_b = 0;
         size_t transitions = 0;
         size_t errors = 0;
+
+         void reset() {
+        cache_hits = 0;
+        cache_misses = 0;
+        cache_evictions = 0;
+        deck_loads_a = 0;
+        deck_loads_b = 0;
+        transitions = 0;
+        tracks_processed = 0;
+        errors = 0;
+    }
     } stats;
 
 public:
@@ -94,6 +105,7 @@ public:
      * Contract: Orchestrate the DJ performance simulation
      */
     void simulate_dj_performance();
+
 
 
     // ========== STATUS & DISPLAY METHODS ==========
