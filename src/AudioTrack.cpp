@@ -53,7 +53,7 @@ AudioTrack::AudioTrack(const AudioTrack& other)
     bpm = other.bpm;
     waveform_size = other.waveform_size;
     waveform_data = new double [waveform_size];
-    for (int i = 0; i < waveform_size; i++) {
+    for (size_t i = 0; i < waveform_size; i++) {
         waveform_data[i] = other.waveform_data[i];
     }
 
@@ -73,7 +73,7 @@ AudioTrack& AudioTrack::operator=(const AudioTrack& other) {
         waveform_size = other.waveform_size;
         delete[] waveform_data;
         waveform_data = new double [waveform_size];
-        for (int i = 0; i < waveform_size; i++) {
+        for (size_t i = 0; i < waveform_size; i++) {
             waveform_data[i] = other.waveform_data[i];
         }
     }
