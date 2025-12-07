@@ -1,3 +1,4 @@
+./bin/dj_manager -I
 
 ============= RUNNING INTERACTIVE SOFTWARE =============
 Created playlist: 
