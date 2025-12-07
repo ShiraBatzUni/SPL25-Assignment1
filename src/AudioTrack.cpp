@@ -47,7 +47,7 @@ AudioTrack::AudioTrack(const AudioTrack& other)
     std::cout << "AudioTrack copy constructor called for: " << other.title << std::endl;
     #endif
     // Your code here...
-     title = other.title;
+    title = other.title;
     artists = other.artists;
     duration_seconds = other.duration_seconds;
     bpm = other.bpm;

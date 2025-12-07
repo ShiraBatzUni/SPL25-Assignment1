@@ -28,12 +28,16 @@ private:
     PlaylistNode* head;
     std::string playlist_name;
     int track_count;
+    void clear();
+    void clone_nodes(const Playlist& other);
 
 public:
     /**
      * Constructor
      */
     Playlist(const std::string& name="");
+    Playlist(const Playlist& other);
+    Playlist& operator=(const Playlist& other);
 
     /**
      * Destructor

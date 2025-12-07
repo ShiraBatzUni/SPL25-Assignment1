@@ -21,6 +21,47 @@ Playlist::~Playlist() {
     }
 }
 
+Playlist::Playlist(const Playlist& other) : head(nullptr), playlist_name(other.playlist_name), track_count(other.track_count) {
+    clone_nodes(other);
+}
+
+Playlist& Playlist::operator=(const Playlist& other){
+    if(this != &other) {
+        clear();
+        clone_nodes(other);
+        playlist_name = other.playlist_name;
+        track_count = other.track_count;
+    }
+    return *this;
+}
+
+void Playlist::clear() {
+    PlaylistNode* current = head;
+    PlaylistNode* next_to_delete;
+    while(current) {
+        next_to_delete = current->next;
+        delete current->track;
+        delete current;
+        current = next_to_delete;
+    }
+    head = nullptr;
+}
+
+void Playlist::clone_nodes(const Playlist& other) {
+    if (!other.head) {
+        return;
+    }
+    PlaylistNode* this_curr = head;
+    PlaylistNode* other_curr = other.head;
+    while (other_curr) {
+        PointerWrapper<AudioTrack> clone = other_curr->track->clone();
+        this_curr = new PlaylistNode(clone.release());
+
+        other_curr = other_curr->next;
+        this_curr = this_curr->next;
+    }
+}
+
 void Playlist::add_track(AudioTrack* track) {
     if (!track) {
         std::cout << "[Error] Cannot add null track to playlist" << std::endl;
