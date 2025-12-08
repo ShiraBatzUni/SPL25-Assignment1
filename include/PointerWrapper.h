@@ -117,9 +117,6 @@ public:
      * @throws std::runtime_error if ptr is null
      */
     T* get() const {
-         if(ptr==nullptr) {
-          throw std::runtime_error("get() called on a nullptr");
-       }
         return ptr; // Placeholder
     }
 

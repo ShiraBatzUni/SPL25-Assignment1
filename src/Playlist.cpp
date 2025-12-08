@@ -49,16 +49,20 @@ void Playlist::clear() {
 
 void Playlist::clone_nodes(const Playlist& other) {
     if (!other.head) {
+        head = nullptr;
         return;
     }
+    PointerWrapper<AudioTrack> head_clone = other.head->track->clone();
+    head = new PlaylistNode(head_clone.release());
+
     PlaylistNode* this_curr = head;
-    PlaylistNode* other_curr = other.head;
+    PlaylistNode* other_curr = other.head->next;
+
     while (other_curr) {
         PointerWrapper<AudioTrack> clone = other_curr->track->clone();
-        this_curr = new PlaylistNode(clone.release());
-
-        other_curr = other_curr->next;
+        this_curr->next = new PlaylistNode(clone.release());
         this_curr = this_curr->next;
+        other_curr = other_curr->next;
     }
 }
 

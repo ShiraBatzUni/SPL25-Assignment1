@@ -23,6 +23,7 @@ bool LRUCache::put(PointerWrapper<AudioTrack> track) {
         size_t index = findSlot(track->get_title());
         if (index != max_size) {
             slots[index].access(++access_counter);
+            return false;
         }
         else {
             if (isFull()) {

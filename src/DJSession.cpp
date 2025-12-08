@@ -89,7 +89,10 @@ int DJSession::load_track_to_controller(const std::string& track_name) {
     else if(result == -1){
         stats.cache_misses++;
         stats.cache_evictions++;
-    }   
+    }  
+    else if (result == -2) { 
+        stats.errors++;
+    } 
     return result; 
 }
 

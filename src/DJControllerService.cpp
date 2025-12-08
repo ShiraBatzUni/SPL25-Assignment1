@@ -19,7 +19,7 @@ int DJControllerService::loadTrackToCache(AudioTrack& track) {
       PointerWrapper<AudioTrack> clone = track.clone();
      if (!clone.get()) {
         std::cerr << "[ERROR] Track: \"" << title << "\" failed to clone\n";
-        return -1;
+        return -2;
     }
     clone.get()->load();
     clone.get()->analyze_beatgrid();
