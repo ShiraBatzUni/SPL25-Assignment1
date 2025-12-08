@@ -38,6 +38,8 @@ public:
     Playlist(const std::string& name="");
     Playlist(const Playlist& other);
     Playlist& operator=(const Playlist& other);
+    Playlist(Playlist&& other) noexcept;
+    Playlist& operator=(Playlist&& other) noexcept;
 
     /**
      * Destructor

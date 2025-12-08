@@ -30,18 +30,36 @@ Playlist& Playlist::operator=(const Playlist& other){
         clear();
         clone_nodes(other);
         playlist_name = other.playlist_name;
+    }
+    return *this;
+}
+
+Playlist::Playlist(Playlist&& other) noexcept : 
+    head(std::move(other.head)), playlist_name(std::move(other.playlist_name)), track_count(other.track_count) {
+    other.head = nullptr;
+    other.track_count = 0;
+}
+
+Playlist& Playlist::operator=(Playlist&& other) noexcept{
+    if(this != &other) {
+        clear();
+        playlist_name = std::move(other.playlist_name);
+        head = std::move(other.head);
         track_count = other.track_count;
+
+        other.head = nullptr;
+        other.track_count = 0;
     }
     return *this;
 }
 
 void Playlist::clear() {
     PlaylistNode* current = head;
-    PlaylistNode* next_to_delete;
     while(current) {
-        next_to_delete = current->next;
+        PlaylistNode* next_to_delete = current->next;
         delete current->track;
         delete current;
+        track_count--;
         current = next_to_delete;
     }
     head = nullptr;
@@ -52,6 +70,7 @@ void Playlist::clone_nodes(const Playlist& other) {
         head = nullptr;
         return;
     }
+
     PointerWrapper<AudioTrack> head_clone = other.head->track->clone();
     head = new PlaylistNode(head_clone.release());
 

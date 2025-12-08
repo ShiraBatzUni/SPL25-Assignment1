@@ -80,13 +80,13 @@ int DJSession::load_track_to_controller(const std::string& track_name) {
     }
     std::cout << "[System] Loading track '" << track_name << "' to controller...\n";
     int result = controller_service.loadTrackToCache(*track);
-    if(result == 1){
+    if(result == 1) {
         stats.cache_hits++;
     } 
-    else if(result == 0){
+    else if(result == 0) {
         stats.cache_misses++;
     } 
-    else if(result == -1){
+    else if(result == -1) {
         stats.cache_misses++;
         stats.cache_evictions++;
     }  
@@ -172,21 +172,10 @@ void DJSession::simulate_dj_performance() {
                 std::cout << "\n-- Processing: " << title << " --\n";
                 stats.tracks_processed++;
 
-                int cache_result = load_track_to_controller(title);
-                if (cache_result == 1) {
-                     stats.cache_hits++;
-            }
-                else if (cache_result == 0) {
-                    stats.cache_misses++;
-                }
-                else if (cache_result == -1) {
-                    stats.cache_misses++;
-                    stats.cache_evictions++;
-                }
+                load_track_to_controller(title);
 
                 bool ok = load_track_to_mixer_deck(title);
                 if (!ok) {
-                    stats.errors++;
                     continue;
                 }
             }
@@ -210,17 +199,10 @@ void DJSession::simulate_dj_performance() {
                 std::cout << "\n-- Processing: " << title << " --\n";
                 stats.tracks_processed++;
 
-                int cache_result = load_track_to_controller(title);
-                if (cache_result == 1) stats.cache_hits++;
-                else if (cache_result == 0) stats.cache_misses++;
-                else if (cache_result == -1) {
-                    stats.cache_misses++;
-                    stats.cache_evictions++;
-                }
+                load_track_to_controller(title);
 
                 bool ok = load_track_to_mixer_deck(title);
                 if (!ok) {
-                    stats.errors++;
                     continue;
                 }
             }
